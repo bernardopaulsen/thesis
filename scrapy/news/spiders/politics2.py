@@ -37,7 +37,7 @@ class BasicSpider(scrapy.Spider):
         for page in response.xpath("//*[@class='feed-post-body']//a/@href").getall():
             yield response.follow(page, self.parse_article)
         n += 1
-        if n <= 20:
+        if n <= 2000:
             next_page = ("https://g1.globo.com/politica/index/feed/pagina-%d.ghtml" % (n))
             yield response.follow(next_page, self.parse)
 
