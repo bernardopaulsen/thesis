@@ -1,4 +1,4 @@
-# Scrapy settings for news project
+# Scrapy settings for estadao project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,16 +7,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'news'
+BOT_NAME = 'estadao'
 
-SPIDER_MODULES = ['news.spiders']
-NEWSPIDER_MODULE = 'news.spiders'
-
-LOG_LEVEL = 'INFO'
+SPIDER_MODULES = ['estadao.spiders']
+NEWSPIDER_MODULE = 'estadao.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'news (+http://www.yourdomain.com)'
+#USER_AGENT = 'estadao (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,14 +45,19 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'news.middlewares.NewsSpiderMiddleware': 543,
+#    'estadao.middlewares.EstadaoSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'news.middlewares.NewsDownloaderMiddleware': 543,
+#    'estadao.middlewares.EstadaoDownloaderMiddleware': 543,
 #}
+DOWNLOADER_MIDDLEWARES = { 
+     'scrapy_splash.SplashCookiesMiddleware': 723, 
+     'scrapy_splash.SplashMiddleware': 725, 
+     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810, 
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -65,7 +68,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'news.pipelines.NewsPipeline': 300,
+#    'estadao.pipelines.EstadaoPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -88,3 +91,12 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+SPLASH_URL = 'http://localhost:8050/'
+
+SPIDER_MIDDLEWARES = { 
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100, 
+}
+
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter' 
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
